@@ -1,0 +1,9 @@
+# Project exclude paths
+.conda
+.pytest_cache
+.vscode
+CMakePresets.json
+CMakeUserPresets.json
+build
+dist
+__pycache__

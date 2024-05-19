@@ -1,0 +1,42 @@
+[build-system]
+requires = [
+    "py-build-cmake~=0.1.8",
+    "pybind11~=2.12.0",
+    "pybind11-stubgen~=2.5.1",
+    "numpy~=1.26.4",
+    "pytest~=8.2.0",
+]
+build-backend = "py_build_cmake.build"
+
+[project]
+name = "autodiff"
+readme = "README.md"
+authors = [{ name = "Matthias Krippner" }]
+license = { file = "LICENSE" }
+urls = { Homepage = "https://github.com/krippner/auto-diff-python" }
+requires-python = ">=3.7"
+dynamic = ["version", "description"]
+
+[tool.py-build-cmake.module]
+directory = "src-python"
+
+[tool.py-build-cmake.sdist]
+include = [
+    "CMakeLists.txt",
+    "CMake/*",
+    "src/*",
+]
+
+[tool.py-build-cmake.cmake]
+minimum_version = "3.15" # toolchain file
+build_type = "Release"
+source_path = "." # CMakelists.txt
+build_path = "build/Release"
+build_args = ["-j"]
+options = {"CMAKE_TOOLCHAIN_FILE:FILEPATH" = "build/Release/generators/conan_toolchain.cmake"}
+install_args = ["--verbose"]
+install_components = ["python_modules"]
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib",]
+testpaths = ["tests"]
